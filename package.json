@@ -97,7 +97,6 @@
         ]
     },
     "files": [
-        "locale", "min", "src", "ender.js", "moment.d.ts", "moment.js", "package.js", "package.json",
-        "CHANGELOG.md", "LICENSE", "README.md"
+        "locale", "min", "src", "ender.js", "moment.d.ts", "moment.js", "package.js"
     ]
 }
