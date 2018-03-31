@@ -543,7 +543,7 @@
             Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) + absNumber;
     }
 
-    var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
+    var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|BBBB|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
 
     var localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g;
 
@@ -739,6 +739,10 @@
     addFormatToken(0, ['YYYYY',  5],       0, 'year');
     addFormatToken(0, ['YYYYYY', 6, true], 0, 'year');
 
+    addFormatToken(0, ['BBBB',   4],       0, function () {
+        return this.year() + 543;
+    });
+
     // ALIASES
 
     addUnitAlias('year', 'y');
@@ -752,6 +756,7 @@
     addRegexToken('Y',      matchSigned);
     addRegexToken('YY',     match1to2, match2);
     addRegexToken('YYYY',   match1to4, match4);
+    addRegexToken('BBBB',   match1to4, match4);
     addRegexToken('YYYYY',  match1to6, match6);
     addRegexToken('YYYYYY', match1to6, match6);
 
@@ -764,6 +769,10 @@
     });
     addParseToken('Y', function (input, array) {
         array[YEAR] = parseInt(input, 10);
+    });
+
+    addParseToken('BBBB', function (input, array) {
+        array[YEAR] = (input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt(input)) - 543;
     });
 
     // HELPERS
